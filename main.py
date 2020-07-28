@@ -57,6 +57,14 @@ def take_home_2020(incometxt):
     ni = round(ni * 12,2)
     take = round(income - inc_tax - ni,2)
     monthly_take = '{:,.2f}'.format(take / 12)
+
+    if income <= pa:
+        taxable = 0
+    elif income > inter and income <= additional:
+        taxable = '{:,.2f}'.format(income - new_pa)
+    else:
+        taxable = '{:,.2f}'.format(income)
+       
     
     #Print statements used prior to HTML
     # print("Your taxable income is £{0:,.2f}".format(taxable))
