@@ -49,8 +49,8 @@ def take_home_2020(income):
     take = round(income - inc_tax - ni,2)
     monthly_take = round(take / 12, 2)
     
-    print("You're taxable income is £{}".format(taxable))
-    print("You're income tax is £{}".format(inc_tax))
-    print("You're NI contribution is £{}".format(ni))
-    print("You're take home pay is £{}".format(take))
-    print("You're monthly take is £{}".format(monthly_take))
+    print("Your taxable income is £{0:,.2f}".format(taxable))
+    print("Your income tax is £{0:,.2f}".format(inc_tax))
+    print("Your NI contribution is £{0:,.2f}".format(ni))
+    print("Your take home pay is £{0:,.2f}".format(take))
+    print("Your monthly take is £{0:,.2f}".format(monthly_take))

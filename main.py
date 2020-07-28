@@ -1,18 +1,6 @@
-# Copyright 2018 Google LLC
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
 
 # [START gae_python38_app]
+
 from flask import Flask, render_template, request
 
 # If `entrypoint` is not defined in app.yaml, App Engine will look for an app
@@ -53,7 +41,7 @@ def take_home_2020(incometxt):
         inc_tax = round(((income - additional) * additional_tax) + ((additional - higher + new_pa) * higher_tax) + ((higher - new_pa) * basic_tax),2)
     else:
         inc_tax = round(((income - additional) * additional_tax) + ((additional - higher + pa) * higher_tax) + ((higher-pa) * basic_tax),2)
-    taxable = income - inc_tax
+    taxable = '{:,.2f}'.format(income - inc_tax)
     
     #Calculate National Insurance
     monthly = income / 12
@@ -65,23 +53,33 @@ def take_home_2020(incometxt):
     else:
         ni = round(((monthly - ni_2) * ni_tax_2) + (((ni_2 - ni_1) * ni_tax_1)),2)
       
-    #Some final calcualtions
+    #Some final calcualtions for output
     ni = round(ni * 12,2)
     take = round(income - inc_tax - ni,2)
-    monthly_take = round(take / 12, 2)
+    monthly_take = '{:,.2f}'.format(take / 12)
     
-    # print("You're taxable income is £{}".format(taxable))
-    # print("You're income tax is £{}".format(inc_tax))
-    # print("You're NI contribution is £{}".format(ni))
-    # print("You're take home pay is £{}".format(take))
-    # print("You're monthly take is £{}".format(monthly_take))
+    #Print statements used prior to HTML
+    # print("Your taxable income is £{0:,.2f}".format(taxable))
+    # print("Your income tax is £{0:,.2f}".format(inc_tax))
+    # print("Your NI contribution is £{0:,.2f}".format(ni))
+    # print("Your take home pay is £{0:,.2f}".format(take))
+    # print("Your monthly take is £{0:,.2f}".format(monthly_take))
 
+    #Change the remaining variables into strings with the correct format
+    inc_tax = '{:,.2f}'.format(inc_tax)
+    ni = '{:,.2f}'.format(ni)
+    take = '{:,.2f}'.format(take)
+    income = '{:,.2f}'.format(income)
+
+    #Create dictionary of output variables to be found with HTML
     calculations = dict();
     calculations['taxable'] = taxable
     calculations['inc_tax'] = inc_tax
     calculations['ni'] = ni
     calculations['take'] = take
     calculations['monthly_take'] = monthly_take
+    calculations['income'] = income
+
     return calculations
 
 @app.route('/', methods=['GET', 'POST'])

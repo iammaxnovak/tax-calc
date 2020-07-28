@@ -1,26 +1,37 @@
 <!doctype html>
-	<head><title>Enter your income...</title></head>
+<html>
+	<head>
+	<title>Enter your income...</title>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}" />
+	</head>
     <body>
-      <form action="/" method="post">
-        <input type="text" name="income"><br>
-        stu
-        
-        <input type="submit" value="Calculate">
-      </form>
+	<div class="centered">
+		<h1>Max's take home pay and tax calculator*</h1>
+		 <p>*This is a personal project and in no way should be used for accounting</p>
+		<form action="/" method="post">
+		<input type="text" name="income", placeholder="Enter income..."><br>
+		Enter yearly income above, press button to calculate<br>
+		<input type="submit" value="Calculate">
+		</form>
+
+	  {% if thome.income %}
+		  <h4>Income entered: £{{thome.income}}</h4>
+	  {% endif %}
       {% if thome.taxable %}
-      	<h4>You're taxable income is £{{thome.taxable}}</h4>
+      	<h4>Your taxable income is £{{thome.taxable}}</h4>
 	  {% endif %}
 	  {% if thome.inc_tax %}
-      	<h4>You're income tax is £{{thome.inc_tax}}</h4>
+      	<h4>Your income tax is £{{thome.inc_tax}}</h4>
 	  {% endif %}
 	  {% if thome.ni %}
-      	<h4>You're NI contribution is £{{thome.ni}}</h4>
+      	<h4>Your NI contribution is £{{thome.ni}}</h4>
 	  {% endif %}
 	  {% if thome.take %}
-      	<h4>You're take home pay is £{{thome.take}}</h4>
+      	<h4>Your take home pay is £{{thome.take}}</h4>
 	  {% endif %}
 	  {% if thome.monthly_take %}
-      	<h4>You're monthly take is £{{thome.monthly_take}}</h4>
+      	<h4>Your monthly take is £{{thome.monthly_take}}</h4>
 	  {% endif %}
+	</div>
 	</body>
 </html>
