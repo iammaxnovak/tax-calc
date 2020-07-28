@@ -9,6 +9,7 @@ app = Flask(__name__)
 
 def take_home_2020(incometxt):
     """A function to calculate take home pay based on salary earned, tax year is 2020"""
+    
     income = int(incometxt)
     #Define the income bands
     pa = 12500 # Yearly personal allowance
@@ -35,7 +36,7 @@ def take_home_2020(incometxt):
         inc_tax = 0
     elif income > pa and income <= higher:
         inc_tax = round((income - pa) * basic_tax,2)
-    elif income > higher and income <= additional:
+    elif income > higher and income <= inter:
         inc_tax = round(((income - higher) * higher_tax) + ((higher - pa) * basic_tax),2)
     elif income > inter and income <= additional:
         inc_tax = round(((income - additional) * additional_tax) + ((additional - higher + new_pa) * higher_tax) + ((higher - new_pa) * basic_tax),2)
