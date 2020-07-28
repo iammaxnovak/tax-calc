@@ -61,6 +61,8 @@ def take_home_2020(incometxt):
 
     if income <= pa:
         taxable = 0
+    elif income <= inter:
+        taxable = '{:,.2f}'.format(income - pa)
     elif income > inter and income <= additional:
         taxable = '{:,.2f}'.format(income - new_pa)
     else:
