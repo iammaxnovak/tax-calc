@@ -15,9 +15,12 @@ def take_home_2020(incometxt):
     pa = 12500 # Yearly personal allowance
     higher = 50000
     inter = 100000
+    no_pa = 125000
     additional = 150000
+    #PA reduces by £1 for every £2 over £100,000, we must account for this
+    new_pa = pa - ((income - inter) / 2 )
     ni_1 = 792 #This is monthly
-    ni_2 = 4167#This is monthly
+    ni_2 = 4167 #This is monthly
     
     #current tax rates
     basic_tax = 0.2
@@ -26,19 +29,13 @@ def take_home_2020(incometxt):
     ni_tax_1 = 0.12
     ni_tax_2 = 0.02
     
-    #PA reduces by £1 for every £2 over £100,000, we must account for this
-    if income > inter and income <= additional:
-        reduction = (inter - income) / 2
-        new_pa = pa = reduction
-    
-    #Calculate taxable income
     if income <= pa:
         inc_tax = 0
     elif income > pa and income <= higher:
         inc_tax = round((income - pa) * basic_tax,2)
     elif income > higher and income <= inter:
         inc_tax = round(((income - higher) * higher_tax) + ((higher - pa) * basic_tax),2)
-    elif income > inter and income <= additional:
+    elif income > inter and income <= no_pa:
         inc_tax = round(((income - additional) * additional_tax) + ((additional - higher + new_pa) * higher_tax) + ((higher - new_pa) * basic_tax),2)
     else:
         inc_tax = round(((income - additional) * additional_tax) + ((additional - higher + pa) * higher_tax) + ((higher-pa) * basic_tax),2)
@@ -61,9 +58,9 @@ def take_home_2020(incometxt):
 
     if income <= pa:
         taxable = 0
-    elif income <= inter:
+    elif income > pa and income <= inter:
         taxable = '{:,.2f}'.format(income - pa)
-    elif income > inter and income <= additional:
+    elif income <= no_pa:
         taxable = '{:,.2f}'.format(income - new_pa)
     else:
         taxable = '{:,.2f}'.format(income)
@@ -83,7 +80,7 @@ def take_home_2020(incometxt):
     income = '{:,.2f}'.format(income)
 
     #Create dictionary of output variables to be found with HTML
-    calculations = dict();
+    calculations = dict()
     calculations['taxable'] = taxable
     calculations['inc_tax'] = inc_tax
     calculations['ni'] = ni
